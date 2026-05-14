@@ -49,6 +49,8 @@ sequenceDiagram
     participant os as OrderService
     participant odb as OrderDB
     participant oodb as OrderEventOutboxDB
+    participant mr as MessageRelayer
+    participant oeq as OrderEventQueue
     
 
     api ->> os: create_order(access_token, order_data)
@@ -57,6 +59,14 @@ sequenceDiagram
     alt transaction 
         os ->> odb: add new order
         os ->> oodb: add order create event
+    end
+
+    loop per 50ms 
+        mr ->> oodb: scan order
+        loop each order
+            mr ->> oeq: submit order 
+            mr ->> oodb: update status
+        end
     end
 ```
 
