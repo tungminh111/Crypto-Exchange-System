@@ -67,7 +67,7 @@ sequenceDiagram
     participant us as UserService
     participant udb as UserDB
     participant usdb as UserSessionDB
-    api ->> us: POST /login(username, password, deviceId)
+    api ->> us: login(username, password, deviceId)
     us ->> udb: validate username/password
     us ->> us: generate new session_id
     us ->> us: generate refresh_token
@@ -82,7 +82,7 @@ sequenceDiagram
     participant us as UserService
     participant udb as UserDB
     participant usdb as UserSessionDB
-    api ->> us: POST /get_access_token(session_id, refresh_token)
+    api ->> us: get_access_token(session_id, refresh_token)
     us ->> usdb: validate session_id/refresh_token
     us ->> us: generate jwt encrypted by private_key 
     us -->> api: jwt token
@@ -93,7 +93,7 @@ sequenceDiagram
 sequenceDiagram
     participant api as APIGateway
     participant us as OrderService
-    api ->> us: POST /create_order(access_token, ...)
+    api ->> us: create_order(access_token, ...)
     us ->> us: validate access_token by public_key
 ```
 
@@ -103,7 +103,7 @@ sequenceDiagram
     participant os as OrderService
     participant us as UserService
     participant ubdb as UserBalanceDB
-    os ->> us: POST /debit_balance(access_token, order_id, instrument_id, quantity)
+    os ->> us: debit_balance(access_token, order_id, instrument_id, quantity)
     us ->> ubdb: deduct(user_id, instrument_id, quantity)
 ```
 NOTE: ignore Audit flow in the current phase

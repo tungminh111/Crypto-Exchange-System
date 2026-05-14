@@ -51,9 +51,9 @@ classDiagram
     participant oodb as OrderEventOutboxDB
     
 
-    api ->> os: POST /create_order(access_token, order_data)
+    api ->> os: create_order(access_token, order_data)
     os ->> os: validate access_token
-    os ->> us: POST /debit_balance(access_token, order_id, instrument_id, quantity)
+    os ->> us: debit_balance(access_token, order_id, instrument_id, quantity)
     alt transaction 
         os ->> odb: add new order
         os ->> oodb: add order create event
