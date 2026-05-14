@@ -43,7 +43,7 @@ classDiagram
 # Sequence diagram
 ## Create Order
 ```mermaid
-classDiagram
+sequenceDiagram
     participant api as APIGateway
     participant us as UserService
     participant os as OrderService
